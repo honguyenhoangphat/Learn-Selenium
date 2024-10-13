@@ -82,8 +82,42 @@ INSERT INTO program (program_id, name, creditPoints, yearCommenced) VALUES
 BAITAP
 
 5. Hiển thị tất cả sinh viên có tên bắt đầu bằng chữH”.
-
 select * from student
-where name like "H%"
+where name like 'H%';
 
 6. Hiển thị tất cả sinh viên hiện đang học năm thứ 4.
+select * from student
+where strftime('%Y', 'now') - yearEnrolled =4
+
+7.Hiển thị tất cả các khóa học từ bảng course bắt đầu với những khóa học có số điểm tín chỉ cao nhất.
+select name, creditPoints
+from course
+order by creditPoints DESC;
+
+8.Đổi tên sinh viên có student_id thấp nhất thành Adam.
+update student
+set name = 'Adam'
+where student_id = (select min(student_id) from student)
+;
+
+9.Đổi tất cả giá trị trong cột name của bảng course thành chữ hoa.
+update course
+set name = upper(name)
+;
+
+10.Xóa sinh viên lớn tuổi nhất trong bảng student.
+delete from student
+where dateOfBirth = (
+    select min(dateOfBirth) 
+    from student
+    )
+;
+select min(dateOfBirth)
+from student
+11.Loại bỏ cột yearCommenced khỏi bảng course.
+alter table course
+drop column yearCommenced;
+
+12.Đổi tên bảng staff thành employee.
+alter table staff
+rename to employee;
